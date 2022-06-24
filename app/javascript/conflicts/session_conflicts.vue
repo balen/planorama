@@ -3,6 +3,7 @@
     <div class="session-conflicts-list" v-if="conflicts.length > 0">
       <div v-if="displaySessionInfo">
         <strong>{{sessionTitle}}</strong><br />
+        <!-- TODO use correct session start time here -->
         {{ formatLocaleDate(conflicts[0].session.start_time )}}
       </div>
       <div class="ml-2">
@@ -11,8 +12,9 @@
           v-for="conflict in conflicts" :key="conflict.id"
         >
           <div>
-            <span v-if="conflict.person"><router-link :to="'/people/availability/' + conflict.person.id">{{conflict.person.published_name}}</router-link></span>
-            {{conflict_type_string(conflict.conflict_type, conflict.person, conflict.session, conflict.room)}}
+            <conflict :conflict="conflict"></conflict>
+            <!-- <span v-if="conflict.person"><router-link :to="'/people/availability/' + conflict.person.id">{{conflict.person.published_name}}</router-link></span>
+            {{conflict_type_string(conflict.conflict_type, conflict.person, conflict.session, conflict.room)}} -->
           </div>
         </div>
       </div>
@@ -27,9 +29,13 @@ import modelUtilsMixin from "@/store/model_utils.mixin"
 import { sessionModel } from '@/store/session.store'
 import dateTimeMixin from '../components/date_time.mixin'
 import { CONFLICT_TEXT } from '@/constants/strings';
+import Conflict from './conflict.vue';
 
 export default {
   name: "SessionConflicts",
+  components: {
+    Conflict
+  },
   mixins: [
     modelMixin,
     modelUtilsMixin,

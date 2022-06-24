@@ -238,13 +238,13 @@ module.exports = {
     },
     PERSON_SAVE_SUCCESS: "Profile record saved successfully",
     CONFLICT_TEXT: {
-        availability: (person_name, conflict_session_name, room_name) => `is outside of availability`,
+        availability: `is outside of availability`,
         // room has multiple sessions ... room, conflicting session
-        room_conflict: (person_name, conflict_session_name, room_name) => `${room_name} has multiple sessions`,
+        room_conflict: `has multiple sessions`,
         // Person has conflicting sessions ...
-        person_session_conflict: (person_name, conflict_session_name, room_name) => `${person_name} is double booked with "${conflict_session_name}"`,
+        person_session_conflict: `is double booked with`,
         // Person is back to back with conflicting sessions ...
-        back_to_back: (person_name, conflict_session_name, room_name) => `${person_name} has back to back with "${conflict_session_name}"`,
+        back_to_back: `has back to back with`,
         default: 'a conflict'
     },
 
