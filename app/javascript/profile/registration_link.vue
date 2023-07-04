@@ -8,7 +8,7 @@
     </form>
   </div>
   <div v-if="selected.registration_number">
-    <b-button variant="link" @click="notimplemented">Unlink Registration</b-button>
+    <b-button variant="link" @click="unlinkRegistration()">Unlink Registration</b-button>
     <dl-person class="align-with-link pt-2" :fields="['registration_number']"></dl-person>
   </div>
 </div>
@@ -19,10 +19,11 @@ import DlPerson from './dl_person.vue'
 import { loginIntegrationsMixin } from '@/store/login_integrations.mixin';
 import { modelMixinNoProp } from '@/mixins';
 import { personModel as model } from '@/store/person.store';
+import { personMixin } from '@/store/person.mixin';
 export default {
   name: "RegistrationLink",
   components: { DlPerson },
-  mixins: [loginIntegrationsMixin, modelMixinNoProp],
+  mixins: [loginIntegrationsMixin, modelMixinNoProp, personMixin],
   data: () => ({
     linked: false,
     model
