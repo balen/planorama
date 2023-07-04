@@ -1,18 +1,30 @@
 <template>
   <div class="container-fluid">
         <dl class="row">
-          <div class="col-12 col-sm-6 col-lg-4">
+          <div class="col-12 col-sm-6">
             <dt>Status</dt>
             <dd class="font-italic ml-2">{{PERSON_CON_STATE[selected.con_state || 'not_set']}}</dd>
-            <dt>Registered</dt>
-            <dd class="font-italic ml-2">{{selected.registered ? 'Yes' : 'No'}}</dd>
-            <dt>Registration ID</dt>
-            <dd class="font-italic ml-2">{{selected.registration_number || 'Unknown'}}</dd>
             </div>
-          <div class="col-12 col-sm-6 col-lg-4">
+          <div class="col-12 col-sm-6">
             <dt>Convention Class</dt>
             <dd class="font-italic ml-2">{{conventionClasses}}</dd>
           </div>
+          </dl>
+          <dl class="row">
+            <div class="col-12 col-sm-3">
+              <dt>Registered</dt>
+              <!-- TODO this is temporary while we're not getting the product from registration-->
+              <dd class="font-italic ml-2 text-muted">Not Specified</dd>
+              <!-- <dd class="font-italic ml-2">{{selected.registered ? 'Yes' : 'No'}}</dd> -->
+              <dt>Registration ID</dt>
+              <dd class="font-italic ml-2">{{selected.registration_number || 'Unknown'}}</dd>
+            </div>
+            <div class="col-12 col-sm-3">
+            <b-button variant="info" size="sm" @click="clydeSync()">Re-sync with registration</b-button>
+            <dt class="mt-2">Last successful sync</dt>
+            <!-- should change when we start saving the sync time -->
+            <dd class="font-italic ml-2 text-muted">Not Specified</dd>
+            </div>
           <dt class="col-12 mt-2">Comments</dt>
           <dd class="col-12">
             <b-form-textarea v-model="comments"></b-form-textarea>
@@ -25,15 +37,18 @@
 <script>
 import { makeSelectedFieldMixin } from '@/mixins'
 import { modelMixinNoProp } from '@/store/model.mixin';
+import { personMixin } from '@/store/person.mixin';
 import { personModel as model } from '@/store/person.store';
 import { PERSON_CON_STATE } from '@/constants/strings';
+import { mapActions } from 'vuex';
 const commentsMixin = makeSelectedFieldMixin('comments');
 
 export default {
   name: 'PeopleAdminTab',
   mixins: [
     modelMixinNoProp,
-    commentsMixin
+    commentsMixin,
+    personMixin
   ],
   data: () => ({
     model,
@@ -43,7 +58,7 @@ export default {
     conventionClasses() {
       return (Object.values(this.selected.convention_roles) || []).map(r => r.role[0].toUpperCase() + r.role.substring(1)).join(', ')
     }
-  }
+  },
 }
 </script>
 

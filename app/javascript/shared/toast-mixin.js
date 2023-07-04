@@ -61,7 +61,7 @@ function getErrorText(errorResp, errorText) {
   if (errorResp?.status === 422) {
     // if i have data, i can provide specific messages with, use that
     try {
-      let errors = errorResp.data.errors.map(e => e.title).filter(e => e.match("Validation"));
+      let errors = errorResp.data.errors.map(e => e.title).filter(e => e.match("Validation") || e.match("Clyde"));
       if(!errors.length) {
         return ERROR_GENERIC_RECOVERABLE(errorEmail);
       }

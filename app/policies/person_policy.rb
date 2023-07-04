@@ -25,6 +25,10 @@ class PersonPolicy < PlannerPolicy
     allowed?(action: :import)
   end
 
+  def clyde_sync?
+    allowed?(action: :clyde_sync)
+  end
+
   def unlink_registration?
     allowed?(action: :unlink_registration)
   end
