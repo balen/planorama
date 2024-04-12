@@ -80,8 +80,8 @@ jobs:
 
       - name: Define the repository labels
         run: |
-          echo "CONTAINER_TEST_REPOSITORY=ghcr.io/planoramaevents/planorama:ci-${{ github.sha }}" >> $GITHUB_ENV
-          echo "CONTAINER_DEPLOY_REPOSITORY=ghcr.io/planoramaevents/planorama:${{ steps.extract_name.outputs.branch }}" >> $GITHUB_ENV
+          echo "CONTAINER_TEST_REPOSITORY=ghcr.io/balen/planorama:ci-${{ github.sha }}" >> $GITHUB_ENV
+          echo "CONTAINER_DEPLOY_REPOSITORY=ghcr.io/balen/planorama:${{ steps.extract_name.outputs.branch }}" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         id: buildx
@@ -112,6 +112,7 @@ jobs:
             DEVISE_SECRET=${{ env.DEVISE_SECRET }}
             RAILS_ENV=production
             NODE_ENV=development
+            PLANO_VERSION_FROM_BUILD=${{ github.ref_name }}
           push: false
           load: true
           # target: development
@@ -153,6 +154,7 @@ jobs:
             DEVISE_SECRET=${{ env.DEVISE_SECRET }}
             RAILS_ENV=production
             NODE_ENV=development
+            PLANO_VERSION_FROM_BUILD=${{ github.ref_name }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
